@@ -1,7 +1,39 @@
-# ARGBroker-Demo-Grupo-Seven
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/86580762/237179645-e4bb6ff9-0bb5-441d-a98f-a4a6a53577e6.jpg">
+
+### **Institución: Instituto Superior Politécnico Córdoba.**
+
+<hr>
+
+### **Tecnicatura en Desarrollo de Software**
+
+<hr>
+
+### **Materias:** Programacion/Base de Datos/Etica y Deontologia
+
+<hr>
+
+### **Profesores:** 
+
+* Ing. Ivana Soledad Rojas Córsico
+
+
+<hr>
+
+### **Año:** 2024
+
+<hr>
+
+### **Integrantes del grupo:**  
+
+* **<a href="https://github.com/Maxg8704">Jose Maximiliano Gimenez</a>**
+* **<a href="https://github.com/Fabrizio112">Fabrizio Adrian Avila</a>**
+<hr>
+
+
+## ARGBroker-Demo-Grupo-Seven
 Proyecto Integrador Final
 
-# Proyecto Integrador: ARGBroker Demo
+## Proyecto Integrador: ARGBroker Demo
 La empresa tecnológica ISPC Cba se ha inscripto como broker de bolsa para ser
 intermediario entre los inversores y la Bolsa de Valores de Buenos Aires MERVAL.
 
