@@ -27,6 +27,14 @@
 
 * **<a href="https://github.com/Maxg8704">Jose Maximiliano Gimenez</a>**
 * **<a href="https://github.com/Fabrizio112">Fabrizio Adrian Avila</a>**
+* **<a href="https://github.com/AnaCamilaAlmiron">Ana Camila Almiron</a>**
+* **<a href="https://github.com/GonzalezEzequiel">Ezequiel Gonzalez</a>**
+* **<a href="https://github.com/Huallpacl">Huallpacl</a>**
+* **<a href="https://github.com/luchogigena">Luciano Gigena</a>**
+* **<a href="https://github.com/marialis19">Marialis Aquino</a>**
+* **<a href="https://github.com/Nachofferreyra">Ignacio Ferreyra</a>**
+
+
 <hr>
 
 
