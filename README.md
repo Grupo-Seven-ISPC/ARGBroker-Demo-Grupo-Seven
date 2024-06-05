@@ -15,6 +15,8 @@
 ### **Profesores:** 
 
 * Ing. Ivana Soledad Rojas Córsico
+* Anahi Hernandez
+* Gerlero Martin Alejandro
 
 
 <hr>
