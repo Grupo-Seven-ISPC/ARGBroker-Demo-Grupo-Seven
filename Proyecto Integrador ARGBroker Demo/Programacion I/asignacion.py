@@ -1,4 +1,5 @@
 import re
+from helpers.helpers import *
 
 class Usuario:
     def __init__(self, cuit, nombre, apellido, email, contraseña):
@@ -90,6 +91,7 @@ def registrar_usuario():
     return usuario
 
 # Función para iniciar sesión
+intentos_contraseña= IntentosContraseña()
 def iniciar_sesion():
     print("\nFormulario de Inicio de Sesión:")
     email = input("Ingrese su email: ")
@@ -101,7 +103,31 @@ def iniciar_sesion():
             print(f"\nInicio de sesión exitoso. Bienvenido, {usuario.nombre}!")
             return usuario
     print("\nCorreo o contraseña incorrectos. Intente nuevamente.")
-    return None
+    print(usuarios_registrados[0].contraseña)
+    intentos_contraseña.incrementar()
+    print(intentos_contraseña.intentos_contraseña)
+    if intentos_contraseña.intentos_contraseña >=3:
+        recuperar_contraseña(email)
+    
+
+def recuperar_contraseña(email):
+    print("\n¿Has olvidado tu contraseña?")
+    print("\n1. Reestablecer Contraseña")
+    print("\n2. Volver a iniciar sesion")
+    contraseña_olvidada= input("\nSeleccione una opcion: ")
+    if contraseña_olvidada == "1":
+        usuario_a_buscar=buscar_usuario_por_mail(usuarios_registrados,email)
+        if usuario_a_buscar:
+            print("Usuario encontrado exitosamente")
+            #ACA VA LA LOGICA DE LA LIBRERIA Y EL CAMBIO DE CONTRASEÑA
+
+        else:
+            print("No se encontro al usuario con ese mail")
+    elif contraseña_olvidada == "2":
+     return iniciar_sesion()
+    else:
+        print("Opción no válida. Intente nuevamente.")
+
 
 # Flujo del programa
 if __name__ == "__main__":
