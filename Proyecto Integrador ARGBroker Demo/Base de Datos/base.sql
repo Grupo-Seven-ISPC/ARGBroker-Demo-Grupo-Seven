@@ -10,7 +10,7 @@ CREATE TABLE Usuarios (
     perfil ENUM('conservador', 'medio', 'agresivo') NOT NULL,  -- Modificado a perfil
     nombre VARCHAR(50),
     apellido VARCHAR(50),
-    cuit VARCHAR(20),
+    cuil VARCHAR(20),
     email VARCHAR(100),
     CONSTRAINT UC_cuit UNIQUE (cuit),
     CONSTRAINT UC_email UNIQUE (email)
