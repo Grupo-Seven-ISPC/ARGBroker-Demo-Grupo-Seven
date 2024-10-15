@@ -53,3 +53,16 @@ CREATE TABLE Movimiento (
     monto DECIMAL(15, 2) CHECK (monto <> 0),
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
+
+
+
+-- IMPLEMENTAR VER SALDO ACTUAL
+INSERT INTO Movimiento (id_usuario, fecha, monto) VALUES (1,'2024-10-13', 1000000);
+INSERT INTO Movimiento (id_usuario, fecha, monto) VALUES (1,'2024-10-13', -100445);
+
+SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
+FROM Movimiento m 
+LEFT JOIN Operacion o 
+ON m.id_usuario = o.id_usuario 
+WHERE m.id_usuario = 1 
+GROUP BY m.id_usuario
