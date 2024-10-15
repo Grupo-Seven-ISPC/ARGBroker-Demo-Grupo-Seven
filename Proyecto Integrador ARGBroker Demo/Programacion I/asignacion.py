@@ -1,36 +1,75 @@
 import re
 from helpers.helpers import *
 from helpers.prueba import *
-from helpers.envio import *
+# from helpers.envio import *
+import mysql.connector
 
+
+connection = mysql.connector.connect(
+            host='camila-database.cwzjkyq4owgc.us-east-1.rds.amazonaws.com',
+            database='argbroker',
+            user='admin',
+            password='8xXnpE4d9BXXeheu2pWH'
+        )
 class Usuario:
-    def __init__(self, cuit, nombre, apellido, email, contraseña):
+    def __init__(self, id, cuit, nombre, apellido, email, contraseña, perfil):
+        self.id = id
         self.cuit = cuit
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
         self.contraseña = contraseña
-        self.transacciones = []  # Lista para almacenar ingresos y egresos
+        self.perfil = perfil
 
     def registrar_ingreso(self, monto):
         """Registra un ingreso de dinero."""
         if monto > 0:
-            self.transacciones.append(monto)
-            print(f"Ingreso registrado: ${monto}")
+            cursor = connection.cursor()
+            insert_query = """
+                INSERT INTO Movimiento (id_usuario, fecha, monto)
+                VALUES (%s, NOW(), %s)
+            """
+            # Asumiendo que 'id_usuarios' es un autoincremento, omitirlo al insertar
+            values = (self.id, monto)
+            cursor.execute(insert_query, values)
+            connection.commit()
+            print(f"Ingreso registrado: ${monto}")       
         else:
             print("El monto debe ser mayor a 0 para registrar un ingreso.")
 
     def registrar_egreso(self, monto):
         """Registra un egreso de dinero."""
         if monto > 0 and monto <= self.calcular_saldo():
-            self.transacciones.append(-monto)  # Los egresos se registran como números negativos
+            cursor = connection.cursor()
+            insert_query = """
+                INSERT INTO Movimiento (id_usuario, fecha, monto)
+                VALUES (%s, NOW(), %s)
+            """
+            # Asumiendo que 'id_usuarios' es un autoincremento, omitirlo al insertar
+            values = (self.id, -monto)
+            cursor.execute(insert_query, values)
+            connection.commit()
             print(f"Egreso registrado: ${monto}")
         else:
             print("Egreso no válido. Verifique el monto.")
 
     def calcular_saldo(self):
         """Calcula el saldo actual sumando los ingresos y restando los egresos."""
-        return sum(self.transacciones)
+        cursor = connection.cursor()
+
+        calcular_saldo_query = """
+            SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
+            FROM Movimiento m 
+            LEFT JOIN Operacion o 
+            ON m.id_usuario = o.id_usuario 
+            WHERE m.id_usuario = %s
+            GROUP BY m.id_usuario
+        """
+        values = (self.id,)
+        cursor.execute(calcular_saldo_query, values)
+        resultado = cursor.fetchone()
+
+        return int(resultado[0])
 
 def solicitar_datos():
     # Validación de CUIT
@@ -80,36 +119,57 @@ def solicitar_datos():
         else:
             break
 
-    return Usuario(cuit, nombre, apellido, email, contraseña)
+    while True:
+        perfil = input("Ingrese el tipo de perfil de usuario: ")
+        if not perfil in ["conservador","medio","agresivo"]:
+            print("El tipo de perfil no es permitido, vuelva a ingresar")
+        else:
+            break
+
+    return Usuario(0, cuit, nombre, apellido, email, contraseña, perfil)
 
 # Lista de usuarios registrados
-usuarios_registrados = []
+# usuarios_registrados = []
 
 # Función para registrar nuevos usuarios
 def registrar_usuario():
     usuario = solicitar_datos()
-    usuarios_registrados.append(usuario)
+
+    cursor = connection.cursor()
+    insert_query = """
+        INSERT INTO Usuarios (perfil, nombre, apellido, cuil, email, contraseña) 
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    # Asumiendo que 'id_usuarios' es un autoincremento, omitirlo al insertar
+    values = (usuario.perfil, usuario.nombre, usuario.apellido, usuario.cuit, usuario.email, usuario.contraseña)
+    cursor.execute(insert_query, values)
+    connection.commit()
+
     print(f"\nEl usuario {usuario.nombre} ha sido registrado con éxito.")
     return usuario
 
 # Función para iniciar sesión
 intentos_contraseña= IntentosContraseña()
+
+
 def iniciar_sesion():
     print("\nFormulario de Inicio de Sesión:")
-    email = input("Ingrese su email: ")
-    contraseña = input("Ingrese su contraseña: ")
 
-    # Buscar al usuario por su correo y contraseña
-    for usuario in usuarios_registrados:
-        if usuario.email == email and usuario.contraseña == contraseña:
-            print(f"\nInicio de sesión exitoso. Bienvenido, {usuario.nombre}!")
-            return usuario
-    print("\nCorreo o contraseña incorrectos. Intente nuevamente.")
-    #print(usuarios_registrados[0].contraseña)
-    intentos_contraseña.incrementar()
-    #print(intentos_contraseña.intentos_contraseña)
-    if intentos_contraseña.intentos_contraseña >=3:
-        recuperar_contraseña(email)
+    resultado = None
+    
+    while resultado is None:
+        email = input("Ingrese su email: ")
+        contraseña = input("Ingrese su contraseña: ")
+        cursor = connection.cursor()
+        insert_query = """
+            SELECT * FROM Usuarios WHERE email = %s AND contraseña = %s 
+        """
+        values = (email, contraseña)
+        cursor.execute(insert_query, values)
+        resultado=cursor.fetchone()
+
+        connection.commit()
+    return Usuario(resultado[0], resultado[4], resultado[2], resultado[3], resultado[5], resultado[6], resultado[1])
     
 
 def recuperar_contraseña(email):
@@ -190,3 +250,4 @@ if __name__ == "__main__":
         else:
             print("Opción no válida. Intente nuevamente.")
 
+# 

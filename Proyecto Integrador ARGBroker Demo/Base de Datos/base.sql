@@ -66,3 +66,5 @@ LEFT JOIN Operacion o
 ON m.id_usuario = o.id_usuario 
 WHERE m.id_usuario = 1 
 GROUP BY m.id_usuario
+
+ALTER TABLE Usuarios ADD COLUMN contraseña VARCHAR(20)
