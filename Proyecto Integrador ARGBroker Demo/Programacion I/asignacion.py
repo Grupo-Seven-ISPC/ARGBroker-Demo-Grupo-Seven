@@ -1,5 +1,7 @@
 import re
 from helpers.helpers import *
+from helpers.prueba import *
+from helpers.envio import *
 
 class Usuario:
     def __init__(self, cuit, nombre, apellido, email, contraseña):
@@ -103,9 +105,9 @@ def iniciar_sesion():
             print(f"\nInicio de sesión exitoso. Bienvenido, {usuario.nombre}!")
             return usuario
     print("\nCorreo o contraseña incorrectos. Intente nuevamente.")
-    print(usuarios_registrados[0].contraseña)
+    #print(usuarios_registrados[0].contraseña)
     intentos_contraseña.incrementar()
-    print(intentos_contraseña.intentos_contraseña)
+    #print(intentos_contraseña.intentos_contraseña)
     if intentos_contraseña.intentos_contraseña >=3:
         recuperar_contraseña(email)
     
@@ -119,10 +121,24 @@ def recuperar_contraseña(email):
         usuario_a_buscar=buscar_usuario_por_mail(usuarios_registrados,email)
         if usuario_a_buscar:
             print("Usuario encontrado exitosamente")
-            #ACA VA LA LOGICA DE LA LIBRERIA Y EL CAMBIO DE CONTRASEÑA
+            print("Se ha enviado a tu correo electronico el token para el cambio de contraseña")
+            token_usuario=generar_token()
+            enviar_mail_recuperacion(email,token_usuario)
+            token_confirmacion=input("Ingrese el token de seguridad: ")
+            if token_usuario == token_confirmacion:
+                contraseña_nueva=input("Ingrese la nueva contraseña :")
+                contraseña_nueva_repetida=input("Ingrese la nueva contraseña de nuevo :")
+                if contraseña_nueva == contraseña_nueva_repetida:
+                    #Aca va la logica para cuando tengamos la conexion con la BD
+                    print("Contraseña cambiada correctamente")
+                else:
+                    print("Las contraseñas no coinciden")
+                    
+            else:
+                print("Codigo de verificacion incorrecto")
 
         else:
-            print("No se encontro al usuario con ese mail")
+            print("No se encontro al usuario con ese email")
     elif contraseña_olvidada == "2":
      return iniciar_sesion()
     else:
@@ -136,7 +152,8 @@ if __name__ == "__main__":
     while True:
         print("\n1. Registrar nuevo usuario")
         print("2. Iniciar sesión")
-        print("3. Salir")
+        print("3. Olvido su contraseña?")
+        print("4. Salir")
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
@@ -165,6 +182,9 @@ if __name__ == "__main__":
                     else:
                         print("Opción no válida. Intente nuevamente.")
         elif opcion == "3":
+            email= input("Ingrese el email con el cual esta asociado su cuenta : ")
+            recuperar_contraseña(email)
+        elif opcion == "4":
             print("Saliendo del sistema. ¡Hasta luego!")
             break
         else:
