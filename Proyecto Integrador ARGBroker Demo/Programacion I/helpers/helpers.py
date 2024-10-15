@@ -11,10 +11,24 @@ class IntentosContraseña:
     def obtener_intentos(self):
         return self.intentos_contraseña
 
-def buscar_usuario_por_mail(listaConUsuarios, emailABuscar):
-    usuario_a_buscar=None
-    for usuario in listaConUsuarios:
-        if usuario.email == emailABuscar:
-            usuario_a_buscar=usuario
-            break
-    return usuario_a_buscar
+def buscar_usuario_por_mail(connection,emailABuscar):
+    cursor = connection.cursor()
+    insert_query= """
+        SELECT email FROM Usuarios WHERE email = %s
+    """
+    values=(emailABuscar,)
+    cursor.execute(insert_query,values)
+    email_usuario_buscado= cursor.fetchall()
+    if len(email_usuario_buscado) >=1:
+        return email_usuario_buscado[0][0]
+    else:
+        return None
+
+def cambiar_contraseña_bd(connection,nuevaContraseña,email):
+    cursor = connection.cursor()
+    insert_query= """
+        UPDATE Usuarios SET contraseña = %s WHERE email = %s
+    """
+    values=(nuevaContraseña,email)
+    cursor.execute(insert_query,values)
+    cursor.fetchall()

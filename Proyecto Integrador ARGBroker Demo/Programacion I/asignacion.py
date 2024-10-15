@@ -1,6 +1,7 @@
 import re
 from helpers.helpers import *
 from helpers.prueba import *
+from helpers.envio import *
 # from helpers.envio import *
 import mysql.connector
 
@@ -178,10 +179,10 @@ def recuperar_contraseña(email):
     print("\n2. Volver a iniciar sesion")
     contraseña_olvidada= input("\nSeleccione una opcion: ")
     if contraseña_olvidada == "1":
-        usuario_a_buscar=buscar_usuario_por_mail(usuarios_registrados,email)
+        usuario_a_buscar=buscar_usuario_por_mail(connection,email)
         if usuario_a_buscar:
             print("Usuario encontrado exitosamente")
-            print("Se ha enviado a tu correo electronico el token para el cambio de contraseña")
+            print("Se esta enviando a tu correo electronico el token para el cambio de contraseña /nAguarde unos instantes .....")
             token_usuario=generar_token()
             enviar_mail_recuperacion(email,token_usuario)
             token_confirmacion=input("Ingrese el token de seguridad: ")
@@ -189,14 +190,14 @@ def recuperar_contraseña(email):
                 contraseña_nueva=input("Ingrese la nueva contraseña :")
                 contraseña_nueva_repetida=input("Ingrese la nueva contraseña de nuevo :")
                 if contraseña_nueva == contraseña_nueva_repetida:
-                    #Aca va la logica para cuando tengamos la conexion con la BD
+                    cambiar_contraseña_bd(connection,contraseña_nueva,email)
                     print("Contraseña cambiada correctamente")
                 else:
                     print("Las contraseñas no coinciden")
                     
             else:
                 print("Codigo de verificacion incorrecto")
-
+        
         else:
             print("No se encontro al usuario con ese email")
     elif contraseña_olvidada == "2":

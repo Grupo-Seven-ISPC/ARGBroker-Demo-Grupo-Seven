@@ -1,6 +1,4 @@
 import re
-from flask import Flask
-from pyngrok import ngrok
 import mysql.connector
 import threading
 
