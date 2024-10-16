@@ -11,34 +11,33 @@ class Usuario:
         self.email = email
         self.contraseña = contraseña
         self.perfil=perfil
+        self.conexion=ConexionDatabase()
     @classmethod
     def convertir_tupla_diccionario(objeto, datos):
         id_usuario, cuil, nombre, apellido, email, perfil, contraseña = datos
         return objeto(id_usuario, cuil, nombre, apellido, email, contraseña, perfil)
     
     def registrar_ingreso(self, monto):
-        """Registra un ingreso de dinero."""
         if monto > 0:
             movimiento_ingreso={
                 "id_usuario":self.id_usuario,
                 "fecha":datetime.now(),
                 "monto":monto
             }
-            ConexionDatabase.add_to_database("Movimiento",movimiento_ingreso)
+            self.conexion.add_to_database("Movimiento",movimiento_ingreso)
             print(f"Ingreso registrado: ${monto}")       
         else:
             print("El monto debe ser mayor a 0 para registrar un ingreso.")
             return
 
-    def registrar_egreso(self, monto):
-        """Registra un egreso de dinero."""
-        if monto > 0 and monto <= self.calcular_saldo():
+    def registrar_egreso(self, monto,conexion):
+        if monto > 0 and monto <= self.calcular_saldo(conexion):
             movimiento_egreso={
-                "id_usuario":self.id,
+                "id_usuario":self.id_usuario,
                 "fecha":datetime.now(),
                 "monto":monto
             }
-            ConexionDatabase.add_to_database("Movimiento",movimiento_egreso)
+            self.conexion.add_to_database("Movimiento",movimiento_egreso)
             print(f"Egreso registrado: ${monto}")
         else:
             print("Egreso no válido. Verifique el monto.")
@@ -57,6 +56,8 @@ class Usuario:
         values = (self.id_usuario,)
         cursor.execute(calcular_saldo_query, values)
         resultado = cursor.fetchone()
-        print(resultado)
-
-        return resultado if int(resultado[0]) else False
+        if resultado :
+            return int(resultado[0]) 
+        else:
+            print("No tienes saldo disponible")
+            return 0

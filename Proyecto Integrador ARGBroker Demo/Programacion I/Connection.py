@@ -19,7 +19,10 @@ class ConexionDatabase:
 
     def add_to_database(self, tabla, objeto):
         cursor = self.connection.cursor()
-        objeto_final=objeto.__dict__
+        if isinstance(objeto, dict):  #Si el objeto ya es un diccionario se deja asi si no se lo convierte en diccionario
+            objeto_final = objeto
+        else:
+            objeto_final = objeto.__dict__
         columnas = ', '.join(objeto_final.keys())
         valores = list(objeto_final.values())
         placeholders = ', '.join(['%s'] * len(valores))

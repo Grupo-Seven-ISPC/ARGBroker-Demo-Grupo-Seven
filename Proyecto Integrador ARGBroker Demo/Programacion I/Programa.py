@@ -110,12 +110,15 @@ class ProgramaPrincipal():
         opcion_usuario = input("Seleccione una opción: ")
         if opcion_usuario == "1":
             print(f"Saldo actual: ${usuario.calcular_saldo(conexion)}")
+            self.dashboard(usuario,conexion)
         elif opcion_usuario == "2":
             monto = float(input("Ingrese el monto del ingreso: "))
             usuario.registrar_ingreso(monto)
+            self.dashboard(usuario,conexion)
         elif opcion_usuario == "3":
             monto = float(input("Ingrese el monto del egreso: "))
-            usuario.registrar_egreso(monto)
+            usuario.registrar_egreso(monto,conexion)
+            self.dashboard(usuario,conexion)
         elif opcion_usuario == "4":
             print("Cerrando sesión...")
             self.start_program()
