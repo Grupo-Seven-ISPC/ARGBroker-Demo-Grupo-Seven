@@ -1,4 +1,4 @@
-from Programa import ProgramaPrincipal
+from src import ProgramaPrincipal
 if __name__ == "__main__":
     app=ProgramaPrincipal()
     app.start_program()
