@@ -1,9 +1,9 @@
-from models import Usuario
-from helpers import UsuarioHelper
-from helpers import Helper
-from helpers import Validaciones
-from database import ConexionDatabaseUsuario
-from database import ConexionDatabaseMovimiento
+from .usuario import Usuario
+from ..helpers.helper_usuario import UsuarioHelper
+from ..helpers.helper_general import Helper
+from ..helpers.validaciones import Validaciones
+from ..database.conexion_usuario import ConexionDatabaseUsuario
+from ..database.conexion_movimiento import ConexionDatabaseMovimiento
 
 class ProgramaPrincipal:
     def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario(),conexion_movimiento_db=ConexionDatabaseMovimiento(),usuario_helper=UsuarioHelper(),helper=Helper(),validaciones=Validaciones()):
@@ -31,23 +31,7 @@ class ProgramaPrincipal:
         if opcion == "1":
             self.register()
         elif opcion == "2":
-            intentos=0
-            max_intentos=3
-            while intentos< max_intentos:
-                usuario_activo = self.login()
-                if usuario_activo:
-                    self.inicio_sesion=True
-                    if self.inicio_sesion:
-                        usuario_sesion_iniciada=Usuario.convertir_tupla_diccionario(usuario_activo)
-                        self.dashboard(usuario_sesion_iniciada) 
-                        break
-                else:
-                    intentos+=1
-                    print(f"Credenciales incorrecta. Intento {intentos} de {max_intentos}.")
-                    if intentos == max_intentos:
-                        print("Número máximo de intentos alcanzado. Volviendo al menú principal.")
-                        self.start_program()
-            
+           self.helper.intentos_inicio_sesion(self.login,self.inicio_sesion,Usuario,self.dashboard,self.start_program)   
         elif opcion == "3":
             self.forgot_password()
         elif opcion == "4":
@@ -109,17 +93,16 @@ class ProgramaPrincipal:
                         self.start_program()
                     else:
                         print("Las contraseñas no coinciden")
-                        return
-                        
+                        return     
                 else:
                     print("Codigo de verificacion incorrecto")
                     return
-            
+                #En esta parte se podria implementar un while con intentos como en el inicio de sesion
             else:
                 print("No se encontro al usuario con ese email")
-                return
+                self.forgot_password()
         elif contraseña_olvidada == "2":
-            self.login()
+            self.helper.intentos_inicio_sesion(self.login,self.inicio_sesion,Usuario,self.dashboard,self.start_program)
         else:
             print("Opción no válida. Intente nuevamente.")
             self.forgot_password()

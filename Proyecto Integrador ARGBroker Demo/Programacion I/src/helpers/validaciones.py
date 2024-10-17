@@ -1,5 +1,5 @@
 import re
-from database import ConexionDatabaseUsuario
+from ..database.conexion_usuario import ConexionDatabaseUsuario
 
 class Validaciones:
     def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario()):

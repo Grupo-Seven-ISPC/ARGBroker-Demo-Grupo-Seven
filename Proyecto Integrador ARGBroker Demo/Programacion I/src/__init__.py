@@ -1,1 +1,1 @@
-from models import ProgramaPrincipal
+from .models.programa import ProgramaPrincipal

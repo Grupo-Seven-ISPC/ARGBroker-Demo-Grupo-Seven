@@ -1,4 +1,4 @@
-from helpers import Validaciones
+from .validaciones import Validaciones
 
 class UsuarioHelper():
     def __init__(self):

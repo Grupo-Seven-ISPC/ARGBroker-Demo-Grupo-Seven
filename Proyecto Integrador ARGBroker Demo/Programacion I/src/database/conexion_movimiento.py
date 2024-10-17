@@ -1,5 +1,5 @@
-from database import connection
-from interfaces import InterfaceConexionDatabaseMovimiento
+from .conexion_database import connection
+from ..interfaces.interface_conexion_database_movimiento import InterfaceConexionDatabaseMovimiento
 
 class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
     def __init__(self):
@@ -33,7 +33,7 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
             values=(id,monto)
             cursor.execute(query, values)
             self.save_changes()
-            if len(mensaje)==2:
+            if len(mensaje)==0:
                 print(f"Ingreso registrado: ${monto}")
             else:
                 print("Capital Inicial Asginado")

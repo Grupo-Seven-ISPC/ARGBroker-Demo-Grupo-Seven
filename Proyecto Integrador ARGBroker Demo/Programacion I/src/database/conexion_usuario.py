@@ -1,5 +1,5 @@
-from database import connection
-from interfaces import InterfaceConexionDatabaseUsuario
+from .conexion_database import connection
+from ..interfaces.interface_conexion_database_usuario import InterfaceConexionDatabaseUsuario
 
 class ConexionDatabaseUsuario(InterfaceConexionDatabaseUsuario):
     def __init__(self):
