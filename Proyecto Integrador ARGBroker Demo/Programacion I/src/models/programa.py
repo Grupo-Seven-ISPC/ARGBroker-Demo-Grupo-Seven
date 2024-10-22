@@ -7,21 +7,27 @@ from ..database.conexion_movimiento import ConexionDatabaseMovimiento
 
 class ProgramaPrincipal:
     def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario(),conexion_movimiento_db=ConexionDatabaseMovimiento(),usuario_helper=UsuarioHelper(),helper=Helper(),validaciones=Validaciones()):
-        self.inicio_sesion=False
+        self.__inicio_sesion=False
         self.usuario_helper=usuario_helper
         self.helper=helper
         self.validaciones=validaciones
         self.conexion_usuario_db=conexion_usuario_db
         self.conexion_movimiento_db=conexion_movimiento_db
-        self.primera_vez_programa=True
+        self.__primera_vez_programa=True
         
-    def __str__(self):
-        pass
-    
+    def get_inicio_sesion(self):
+        return self.__inicio_sesion
+    def set_inicio_sesion(self,valor):
+        self.__inicio_sesion=valor
+    def get_primera_vez_programa(self):
+        return self.__primera_vez_programa
+    def set_primera_vez_programa(self,valor):
+        self.__primera_vez_programa=valor
+
     def start_program(self):
-        if self.primera_vez_programa:
+        if self.get_primera_vez_programa():
             print("Bienvenido al sistema.")
-            self.primera_vez_programa=False
+            self.set_primera_vez_programa(False)
         print("\n1. Registrar nuevo usuario")
         print("2. Iniciar sesión")
         print("3. Olvido su contraseña?")
@@ -31,7 +37,7 @@ class ProgramaPrincipal:
         if opcion == "1":
             self.register()
         elif opcion == "2":
-           self.helper.intentos_inicio_sesion(self.login,self.inicio_sesion,Usuario,self.dashboard,self.start_program)   
+           self.helper.intentos_inicio_sesion(self.login,self.get_inicio_sesion(),Usuario,self.dashboard,self.start_program)   
         elif opcion == "3":
             self.forgot_password()
         elif opcion == "4":
@@ -102,7 +108,7 @@ class ProgramaPrincipal:
                 print("No se encontro al usuario con ese email")
                 self.forgot_password()
         elif contraseña_olvidada == "2":
-            self.helper.intentos_inicio_sesion(self.login,self.inicio_sesion,Usuario,self.dashboard,self.start_program)
+            self.helper.intentos_inicio_sesion(self.login,self.get_inicio_sesion(),Usuario,self.dashboard,self.start_program)
         else:
             print("Opción no válida. Intente nuevamente.")
             self.forgot_password()
@@ -114,15 +120,15 @@ class ProgramaPrincipal:
         print("4. Cerrar sesión")
         opcion_usuario = input("Seleccione una opción: ")
         if opcion_usuario == "1":
-            print(f"Saldo actual: ${self.conexion_movimiento_db.calcular_saldo(usuario.id_usuario)}")
+            print(f"Saldo actual: ${self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())}")
             self.dashboard(usuario)
         elif opcion_usuario == "2":
             monto = float(input("Ingrese el monto del ingreso: "))
-            self.conexion_movimiento_db.registrar_ingreso(monto,usuario.id_usuario)
+            self.conexion_movimiento_db.registrar_ingreso(monto,usuario.get_id_usuario())
             self.dashboard(usuario)
         elif opcion_usuario == "3":
             monto = float(input("Ingrese el monto del egreso: "))
-            self.conexion_movimiento_db.registrar_egreso(monto,usuario.id_usuario)
+            self.conexion_movimiento_db.registrar_egreso(monto,usuario.get_id_usuario())
             self.dashboard(usuario)
         elif opcion_usuario == "4":
             print("Cerrando sesión...")
