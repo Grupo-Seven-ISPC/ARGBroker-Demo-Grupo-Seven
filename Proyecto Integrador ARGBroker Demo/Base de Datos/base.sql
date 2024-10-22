@@ -80,3 +80,4 @@ SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN 
 
 UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
 UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
+UPDATE Usuarios SET email = "lalalamail@gmail.com" WHERE id_usuario = 3
