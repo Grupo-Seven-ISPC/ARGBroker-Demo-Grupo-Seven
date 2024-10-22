@@ -68,3 +68,12 @@ WHERE m.id_usuario = 1
 GROUP BY m.id_usuario
 
 ALTER TABLE Usuarios ADD COLUMN contraseña VARCHAR(20)
+
+SELECT NOW();
+
+SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
+            FROM Movimiento m 
+            LEFT JOIN Operacion o 
+            ON m.id_usuario = o.id_usuario 
+            WHERE m.id_usuario = 4
+            GROUP BY m.id_usuario;
