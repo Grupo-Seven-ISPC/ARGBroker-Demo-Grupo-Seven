@@ -1,0 +1,93 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribución
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Archivos del entorno virtual
+venv/
+ENV/
+env/
+.venv/
+env.bak/
+env/
+
+# Archivos de instalación y configuración
+*.log
+*.pot
+*.pid
+*.gz
+*.zip
+*.tar
+*.bak
+*.sqlite3
+
+# Archivos de configuración del IDE
+.vscode/
+.idea/
+*.swp
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+*.manifest
+*.spec
+
+# Thumbnails
+._*
+
+# Archivos de configuración locales
+*.env
+.env.*
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Archivos generados por pytest
+.cache/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.coverage
+.hypothesis/
+
+# MyPy cache
+.mypy_cache/
+
+# Otros archivos de caché
+*.mo
+*.pot
+
+# Carpetas de caché general
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Archivos creados por OS
+.DS_Store
+Thumbs.db
