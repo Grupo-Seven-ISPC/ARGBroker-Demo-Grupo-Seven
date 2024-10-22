@@ -77,3 +77,6 @@ SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN 
             ON m.id_usuario = o.id_usuario 
             WHERE m.id_usuario = 4
             GROUP BY m.id_usuario;
+
+UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
+UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
