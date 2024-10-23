@@ -117,7 +117,8 @@ class ProgramaPrincipal:
         print("\n1. Ver saldo actual")
         print("2. Registrar ingreso")
         print("3. Registrar egreso")
-        print("4. Cerrar sesión")
+        print("4. Mostrar precio de compras y ventas")
+        print("5. Cerrar sesión")
         opcion_usuario = input("Seleccione una opción: ")
         if opcion_usuario == "1":
             print(f"Saldo actual: ${self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())}")
@@ -131,6 +132,10 @@ class ProgramaPrincipal:
             self.conexion_movimiento_db.registrar_egreso(monto,usuario.get_id_usuario())
             self.dashboard(usuario)
         elif opcion_usuario == "4":
+            simbolo = str(input("Seleccione el simbolo de la acción a consultar:"))
+            self.conexion_movimiento_db.consultar_simbolo(simbolo)
+            self.dashboard(usuario)
+        elif opcion_usuario == "5":
             print("Cerrando sesión...")
             self.start_program()
         else:

@@ -81,3 +81,33 @@ SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN 
 UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
 UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
 UPDATE Usuarios SET email = "lalalamail@gmail.com" WHERE id_usuario = 3
+
+CREATE table HistorialAcciones (
+id_accion INT NOT NULL,
+dia DATE,
+precio INT NOT NULL,
+FOREIGN KEY (id_accion) REFERENCES Accion(id_accion)
+);
+
+INSERT INTO Accion (nombre, simbolo) VALUES ("Aluar", "ALUA");
+INSERT INTO Accion (nombre, simbolo) VALUES ("BBVA", "BBAR");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Banco Macro","BMA");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Bolsas y Mercados Argentinos S.A","BYMA");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Central Puerto S.A", "CEPU");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Sociedad Comercial del Plata", "COME");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Cresud", "CRES");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Cablevision Holding S.A", "CVH");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Edenor", "EDN");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Grupo Financiero Galicia S.A", "GGAL");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Holcim Argentina", "HARG");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Loma Negra Compañia Industrial Argentina S.A", "LOMA");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Mirgor", "MIRG");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Pampa Energía", "PAMP");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Grupo Supervielle S.A", "SUPV");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Telecom Argentina", "TECO2");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Transportadora Gas del Norte", "TGN04");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Transportadora Gas del Sur", "TGSU2");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Transener", "TRAN");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Ternium Argentina S.A", "TXAR");
+INSERT INTO Accion (nombre, simbolo) VALUES ("Banco de Valores S.A", "VALO");
+INSERT INTO Accion (nombre, simbolo) VALUES ("YPF", "YPFD");

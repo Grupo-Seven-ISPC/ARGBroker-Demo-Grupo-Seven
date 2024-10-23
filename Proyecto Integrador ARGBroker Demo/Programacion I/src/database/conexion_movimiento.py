@@ -72,3 +72,20 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
             return False
     def save_changes(self):
         self.connection.commit()
+        
+    def consultar_simbolo(self,simbolo):
+        try:
+            cursor = connection.cursor()
+            query = """
+                SELECT h.precio FROM HistorialAcciones h JOIN Accion a ON h.id_accion = a.id_accion 
+                WHERE a.simbolo = %s AND h.dia = CURRENT_DATE()
+            """
+            values=(simbolo,)
+            cursor.execute(query, values)
+            resultado=cursor.fetchone()
+            precio = resultado[0]
+            print(f"El precio de compra es: {precio}")
+        except connection.Error as e:
+            print(f"Error en la base de datos: {e}")
+        except Exception as e:
+            print(f"Ocurrió un error inesperado: {e}")
