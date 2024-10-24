@@ -4,15 +4,20 @@ from ..helpers.helper_general import Helper
 from ..helpers.validaciones import Validaciones
 from ..database.conexion_usuario import ConexionDatabaseUsuario
 from ..database.conexion_movimiento import ConexionDatabaseMovimiento
+from ..database.conexion_accion import ConexionDatabaseAccion
+from ..database.conexion_operacion import ConexionDatabaseOperacion
+
 
 class ProgramaPrincipal:
-    def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario(),conexion_movimiento_db=ConexionDatabaseMovimiento(),usuario_helper=UsuarioHelper(),helper=Helper(),validaciones=Validaciones()):
+    def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario(),conexion_movimiento_db=ConexionDatabaseMovimiento(),usuario_helper=UsuarioHelper(),helper=Helper(),validaciones=Validaciones(), conexion_accion_db=ConexionDatabaseAccion(),conexion_operacion_db=ConexionDatabaseOperacion()):
         self.__inicio_sesion=False
         self.usuario_helper=usuario_helper
         self.helper=helper
         self.validaciones=validaciones
         self.conexion_usuario_db=conexion_usuario_db
         self.conexion_movimiento_db=conexion_movimiento_db
+        self.conexion_accion_db=conexion_accion_db
+        self.conexion_operacion_db=conexion_operacion_db
         self.__primera_vez_programa=True
         
     def get_inicio_sesion(self):
@@ -118,7 +123,8 @@ class ProgramaPrincipal:
         print("2. Registrar ingreso")
         print("3. Registrar egreso")
         print("4. Mostrar precio de compras y ventas")
-        print("5. Cerrar sesión")
+        print("5. Comprar/Vender Acciones")
+        print("6. Cerrar sesión")
         opcion_usuario = input("Seleccione una opción: ")
         if opcion_usuario == "1":
             print(f"Saldo actual: ${self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())}")
@@ -136,8 +142,59 @@ class ProgramaPrincipal:
             self.conexion_movimiento_db.consultar_simbolo(simbolo)
             self.dashboard(usuario)
         elif opcion_usuario == "5":
+            print("1. Comprar Acciones")
+            print("2. Vender Acciones")
+            opcion_usuario_accion=input("Seleccione la opcion: ")
+            if opcion_usuario_accion == "1":
+                self.compra_acciones(usuario)
+            elif opcion_usuario_accion == "2":
+                self.venta_acciones()
+            else:
+                print("Opcion no válida . Intente nuevamente")
+                self.dashboard(usuario)
+
+        elif opcion_usuario == "6":
             print("Cerrando sesión...")
             self.start_program()
         else:
             print("Opción no válida. Intente nuevamente.")
             self.start_program()
+    
+    def compra_acciones(self,usuario):
+        print("-------------------------------------")
+        print("COMPRAR ACCIONES")
+        print("-------------------------------------")
+        print("Acciones Disponibles: ")
+        cantidad_total_acciones= self.conexion_accion_db.get_all_acciones()
+        for accion in cantidad_total_acciones:
+            print(f"Empresa : {accion[1]} , Simbolo : {accion[2]}")
+        accion_a_comprar=input("\nEscriba el simbolo de la accion que quiere comprar: ")
+        verificar_accion_a_comprar=self.validaciones.validacion_accion_simbolo_existe(cantidad_total_acciones,accion_a_comprar)
+        if verificar_accion_a_comprar:
+            precio_accion=self.conexion_movimiento_db.consultar_simbolo(accion_a_comprar)
+            print("\nDesea continuar la operacion:")
+            print("1. Si")
+            print("2. No")
+            continuar_operacion=input("Seleccione una opcion: ")
+            if continuar_operacion == "1":
+                cantidad_acciones=input(f"\nEscriba la cantidad de acciones de {accion_a_comprar} que desea adquirir: ")
+                saldo_usuario=self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())
+                saldo_total_del_usuario_a_abonar_por_compra=precio_accion*int(cantidad_acciones)
+                id_accion_a_comprar=self.helper.obtener_id_accion(cantidad_total_acciones,accion_a_comprar)
+                if (saldo_usuario - saldo_total_del_usuario_a_abonar_por_compra) >=0:
+                    print("Realizando compra ...")
+                    self.conexion_operacion_db.add_operacion(1,usuario.get_id_usuario(),id_accion_a_comprar,cantidad_acciones,"compra",precio_accion)
+                    self.dashboard(usuario)
+                else:
+                    print("No tienes saldo suficiente para realizar esta compra")
+                    self.dashboard(usuario) 
+            elif continuar_operacion == "2":
+                self.dashboard(usuario)
+            else:
+                print("Opción no válida. Intente nuevamente.")
+                self.compra_acciones(usuario)
+        else:
+            print("Accion Invalida")
+            self.compra_acciones(usuario)
+    def venta_acciones(self):
+        pass

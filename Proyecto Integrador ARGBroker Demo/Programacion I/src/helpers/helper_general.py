@@ -48,5 +48,8 @@ class Helper:
                 if intentos == max_intentos:
                     print("Número máximo de intentos alcanzado. Volviendo al menú principal.")
                     start_program()
-
+    def obtener_id_accion(self,listado_acciones,accion):
+        for accion_individual in listado_acciones:
+            if accion == accion_individual[2]:
+                return accion_individual[0]
 

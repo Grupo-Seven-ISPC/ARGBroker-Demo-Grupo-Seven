@@ -73,6 +73,7 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
     def save_changes(self):
         self.connection.commit()
         
+        #Esta funcion tiene que ir en Accion , o en HistorialAcciones
     def consultar_simbolo(self,simbolo):
         try:
             cursor = connection.cursor()
@@ -84,7 +85,8 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
             cursor.execute(query, values)
             resultado=cursor.fetchone()
             precio = resultado[0]
-            print(f"El precio de compra es: {precio}")
+            print(f"\nEl precio de compra es: {precio}")
+            return precio
         except connection.Error as e:
             print(f"Error en la base de datos: {e}")
         except Exception as e:

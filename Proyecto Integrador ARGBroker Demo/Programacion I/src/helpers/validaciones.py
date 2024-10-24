@@ -45,3 +45,9 @@ class Validaciones:
             return True
         else:
             return False
+    def validacion_accion_simbolo_existe(self,listado_acciones,simbolo):
+        existe_accion=False
+        for accion in listado_acciones:
+            if simbolo == accion[2]:
+                existe_accion= True
+        return existe_accion

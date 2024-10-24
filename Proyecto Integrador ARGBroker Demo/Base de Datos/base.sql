@@ -111,3 +111,8 @@ INSERT INTO Accion (nombre, simbolo) VALUES ("Transener", "TRAN");
 INSERT INTO Accion (nombre, simbolo) VALUES ("Ternium Argentina S.A", "TXAR");
 INSERT INTO Accion (nombre, simbolo) VALUES ("Banco de Valores S.A", "VALO");
 INSERT INTO Accion (nombre, simbolo) VALUES ("YPF", "YPFD");
+
+
+INSERT INTO Estado (estado) VALUES ("Operado")
+INSERT INTO Estado (estado) VALUES ("Cancelado")
+INSERT INTO Estado (estado) VALUES ("Pendiente")
