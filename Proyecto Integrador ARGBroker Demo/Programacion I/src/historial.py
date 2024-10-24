@@ -43,15 +43,17 @@ try:
                 print(f"No hay transacciones para el inversor con ID {id_usuario}")
 
     # Solicitar el ID del usuario
-    id_usuario = int(input("Introduce el ID del inversor: "))
-    obtener_historial_transacciones(id_usuario)
+    try:
+        id_usuario = int(input("Introduce el ID del inversor: "))
+        obtener_historial_transacciones(id_usuario)
+    except ValueError:
+        print("El ID del inversor debe ser un número entero.")
 
 except pymysql.MySQLError as e:
-    print(f"Error al conectar o ejecutar la consulta: {e}")
+    print(f"Error al conectar o ejecutar la consulta: {e.args[0]}, {e.args[1]}")
 
 finally:
     # Asegurarse de cerrar la conexión
     if conexion:
         conexion.close()
         print("Conexión cerrada.")
-1
