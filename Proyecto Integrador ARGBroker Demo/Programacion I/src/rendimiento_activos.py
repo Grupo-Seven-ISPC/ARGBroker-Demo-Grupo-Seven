@@ -1,6 +1,5 @@
 import pymysql
 
-# Clase para la conexión a la base de datos
 class BaseDatos:
     def __init__(self):
         self.conexion = None
@@ -22,7 +21,6 @@ class BaseDatos:
             self.conexion.close()
             print("Conexión cerrada")
 
-# Clase que representa un activo/acción
 class Accion:
     def __init__(self, id_accion, nombre, simbolo, precio_compra, cantidad):
         self.id_accion = id_accion
@@ -32,7 +30,6 @@ class Accion:
         self.cantidad = cantidad
         self.precio_actual = 0.0
 
-    # Método para obtener el precio actual de la acción desde la base de datos
     def obtener_precio_actual(self, db):
         try:
             with db.conexion.cursor() as cursor:
@@ -46,7 +43,6 @@ class Accion:
         except pymysql.MySQLError as e:
             print(f"Error al obtener el precio actual: {e}")
 
-    # Método para calcular el rendimiento de la acción
     def calcular_rendimiento(self):
         if self.precio_actual > 0:
             rendimiento = ((self.precio_actual - self.precio_compra) / self.precio_compra) * 100
@@ -54,7 +50,6 @@ class Accion:
         else:
             return None
 
-    # Método para mostrar los detalles y rendimiento
     def mostrar_rendimiento(self):
         rendimiento = self.calcular_rendimiento()
         if rendimiento is not None:
@@ -64,13 +59,11 @@ class Accion:
         else:
             print(f"Precio actual no disponible para la acción {self.nombre}")
 
-# Clase para manejar las operaciones del usuario
 class Usuario:
     def __init__(self, id_usuario):
         self.id_usuario = id_usuario
         self.acciones = []
 
-    # Método para obtener las operaciones del usuario
     def obtener_operaciones(self, db):
         try:
             with db.conexion.cursor() as cursor:
@@ -97,13 +90,11 @@ class Usuario:
         except pymysql.MySQLError as e:
             print(f"Error al obtener las operaciones del usuario: {e}")
 
-    # Mostrar rendimiento de las acciones del usuario
     def mostrar_rendimiento_acciones(self, db):
         for accion in self.acciones:
             accion.obtener_precio_actual(db)
             accion.mostrar_rendimiento()
 
-# Función principal
 def main():
     db = BaseDatos()
     db.conectar()
