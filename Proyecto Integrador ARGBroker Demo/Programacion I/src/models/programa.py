@@ -179,9 +179,14 @@ class ProgramaPrincipal:
             if continuar_operacion == "1":
                 cantidad_acciones=input(f"\nEscriba la cantidad de acciones de {accion_a_comprar} que desea adquirir: ")
                 saldo_usuario=self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())
-                saldo_total_del_usuario_a_abonar_por_compra=precio_accion*int(cantidad_acciones)
+                saldo_a_abonar_por_compra=precio_accion*int(cantidad_acciones)
+                comision_broker=saldo_a_abonar_por_compra*0.015
+
+                saldo_total_a_abonar_por_el_usuario=saldo_a_abonar_por_compra + comision_broker
                 id_accion_a_comprar=self.helper.obtener_id_accion(cantidad_total_acciones,accion_a_comprar)
-                if (saldo_usuario - saldo_total_del_usuario_a_abonar_por_compra) >=0:
+
+                validacion_saldo=self.validaciones.validacion_saldo_compra_acciones(saldo_usuario,saldo_total_a_abonar_por_el_usuario)
+                if validacion_saldo:
                     print("Realizando compra ...")
                     self.conexion_operacion_db.add_operacion(1,usuario.get_id_usuario(),id_accion_a_comprar,cantidad_acciones,"compra",precio_accion)
                     self.dashboard(usuario)
@@ -197,4 +202,7 @@ class ProgramaPrincipal:
             print("Accion Invalida")
             self.compra_acciones(usuario)
     def venta_acciones(self):
-        pass
+        print("-------------------------------------")
+        print("VENDER ACCIONES")
+        print("-------------------------------------")
+        print("Acciones Disponibles: ")

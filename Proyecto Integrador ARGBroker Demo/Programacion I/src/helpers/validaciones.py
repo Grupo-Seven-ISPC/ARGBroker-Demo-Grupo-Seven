@@ -51,3 +51,8 @@ class Validaciones:
             if simbolo == accion[2]:
                 existe_accion= True
         return existe_accion
+    def validacion_saldo_compra_acciones(self,saldo_total,saldo_a_abonar):
+        if saldo_total - saldo_a_abonar >=0:
+            return True
+        else :
+            return False

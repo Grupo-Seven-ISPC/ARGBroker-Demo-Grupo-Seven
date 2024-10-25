@@ -8,14 +8,26 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
         try:
             cursor = connection.cursor()
             query = """
-                SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
-                FROM Movimiento m 
-                LEFT JOIN Operacion o 
-                ON m.id_usuario = o.id_usuario 
-                WHERE m.id_usuario = %s
-                GROUP BY m.id_usuario
+                SELECT 
+                    COALESCE(m.total_movimiento, 0) + COALESCE(o.total_operacion, 0) AS BalanceTotal
+                FROM 
+                    (SELECT id_usuario, SUM(monto) AS total_movimiento
+                    FROM Movimiento
+                    WHERE id_usuario = %s
+                    GROUP BY id_usuario) AS m
+                LEFT JOIN 
+                    (SELECT id_usuario,
+                            SUM(CASE 
+                                    WHEN tipo = 'compra' THEN -cantidad * precio_unit
+                                    WHEN tipo = 'venta' THEN cantidad * precio_unit
+                                END) AS total_operacion
+                    FROM Operacion
+                    WHERE id_usuario = %s
+                    GROUP BY id_usuario) AS o
+                ON m.id_usuario = o.id_usuario;
+
             """
-            values = (id,)
+            values = (id,id)
             cursor.execute(query, values)
             resultado = cursor.fetchone()
             if resultado :
