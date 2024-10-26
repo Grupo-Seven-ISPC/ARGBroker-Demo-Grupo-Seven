@@ -7,4 +7,4 @@ class HelperTransaccion:
                 return accion_individual[0]
     def mostrar_cantidad_total_acciones(self,acciones):
         for accion in acciones:
-            print(f"Empresa : {accion[1]} , Simbolo : {accion[2]}")
+            print(f"Empresa : {accion[1]} , Simbolo : {accion[2]}, Cantidad : {accion[3]}")

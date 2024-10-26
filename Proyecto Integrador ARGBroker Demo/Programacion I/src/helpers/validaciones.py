@@ -56,3 +56,5 @@ class Validaciones:
             return True
         else :
             return False
+    def validacion_cantidad_acciones_disponible(self):
+        pass
