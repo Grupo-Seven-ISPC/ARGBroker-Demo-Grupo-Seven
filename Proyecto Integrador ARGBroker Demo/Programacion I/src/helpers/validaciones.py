@@ -2,7 +2,7 @@ import re
 from ..database.conexion_usuario import ConexionDatabaseUsuario
 
 class Validaciones:
-    def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario()):
+    def __init__(self,conexion_usuario_db:ConexionDatabaseUsuario):
         self.conexion_usuario_db=conexion_usuario_db
 
     def validacion_cuil(self,cuil):
@@ -51,3 +51,8 @@ class Validaciones:
             if simbolo == accion[2]:
                 existe_accion= True
         return existe_accion
+    def validacion_saldo_compra_acciones(self,saldo_total,saldo_a_abonar):
+        if saldo_total - saldo_a_abonar >=0:
+            return True
+        else :
+            return False

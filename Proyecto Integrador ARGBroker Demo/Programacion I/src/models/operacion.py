@@ -8,7 +8,5 @@ class Operacion:
         self.cantidad=cantidad
         self.tipo=tipo
         self.precio_unit=precio_unit
-    def obtener_estado():
-        pass
-    def calcular_valor_total():
-        pass
+
+    # Posiblemente la eliminemos por que no la necesitamos

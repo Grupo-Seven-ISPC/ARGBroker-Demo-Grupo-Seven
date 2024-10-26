@@ -1,8 +1,8 @@
 from .validaciones import Validaciones
 
-class UsuarioHelper():
-    def __init__(self):
-        self.validaciones=Validaciones()
+class HelperUsuario:
+    def __init__(self,validaciones:Validaciones):
+        self.validaciones=validaciones
 
     def ingresar_cuil(self):
         cuil = input("Ingrese su CUIL (11 dígitos): ")

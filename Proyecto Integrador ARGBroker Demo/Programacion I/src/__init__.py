@@ -1,1 +1,0 @@
-from .models.programa import ProgramaPrincipal

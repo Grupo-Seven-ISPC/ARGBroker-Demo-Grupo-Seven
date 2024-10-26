@@ -5,7 +5,7 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 
-class Helper:
+class HelperPassword:
     def generar_token(self):
         token = str(uuid.uuid4())
         token_final=token[:6]
@@ -31,25 +31,4 @@ class Helper:
                 print("Correo enviado con éxito!")
         except Exception as e:
             print(f"Ocurrió un error: {e}")
-    def intentos_inicio_sesion(self,login,inicio_sesion,usuario,dashboard,start_program):
-        intentos=0
-        max_intentos=3
-        while intentos< max_intentos:
-            usuario_activo = login()
-            if usuario_activo:
-                inicio_sesion=True
-                if inicio_sesion:
-                    usuario_sesion_iniciada=usuario.convertir_tupla_diccionario(usuario_activo)
-                    dashboard(usuario_sesion_iniciada) 
-                    break
-            else:
-                intentos+=1
-                print(f"Credenciales incorrecta. Intento {intentos} de {max_intentos}.")
-                if intentos == max_intentos:
-                    print("Número máximo de intentos alcanzado. Volviendo al menú principal.")
-                    start_program()
-    def obtener_id_accion(self,listado_acciones,accion):
-        for accion_individual in listado_acciones:
-            if accion == accion_individual[2]:
-                return accion_individual[0]
-
+   
