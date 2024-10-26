@@ -47,8 +47,3 @@ class Usuario:
     def convertir_tupla_diccionario(objeto, datos):
         id_usuario, cuil, nombre, apellido, email, perfil, contraseña = datos
         return objeto(id_usuario, cuil, nombre, apellido, email, contraseña, perfil)
-
-    def registrar_inversion():
-        pass
-    def gestionar_perfil():
-        pass

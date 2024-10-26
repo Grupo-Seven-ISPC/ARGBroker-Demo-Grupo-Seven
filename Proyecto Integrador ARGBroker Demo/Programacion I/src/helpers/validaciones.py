@@ -2,7 +2,7 @@ import re
 from ..database.conexion_usuario import ConexionDatabaseUsuario
 
 class Validaciones:
-    def __init__(self,conexion_usuario_db=ConexionDatabaseUsuario()):
+    def __init__(self,conexion_usuario_db:ConexionDatabaseUsuario):
         self.conexion_usuario_db=conexion_usuario_db
 
     def validacion_cuil(self,cuil):

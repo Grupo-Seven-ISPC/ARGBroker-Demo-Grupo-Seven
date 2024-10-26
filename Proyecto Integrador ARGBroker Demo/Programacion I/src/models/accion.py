@@ -3,7 +3,5 @@ class Accion:
         self.id_accion=id_accion
         self.nombre=nombre
         self.simbolo=simbolo
-    def obtener_precio_actual():
-        pass
-    def obtener_historial_precios():
-        pass
+
+    # Posiblemente la eliminemos por que no tenemos que hacer un insert como tal
