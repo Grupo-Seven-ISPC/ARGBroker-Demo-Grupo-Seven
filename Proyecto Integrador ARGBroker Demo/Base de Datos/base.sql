@@ -21,6 +21,7 @@ CREATE TABLE Accion (
     id_accion INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     simbolo VARCHAR(10) NOT NULL,
+    cantidad INT DEFAULT 500,
     CONSTRAINT UC_simbolo UNIQUE (simbolo)
 );
 
@@ -82,10 +83,11 @@ UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
 UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
 UPDATE Usuarios SET email = "lalalamail@gmail.com" WHERE id_usuario = 3
 
-CREATE table HistorialAcciones (
+CREATE table Cotizaciones (
 id_accion INT NOT NULL,
 dia DATE,
-precio INT NOT NULL,
+precio_compra INT NOT NULL,
+precio_venta INT NOT NULL,
 FOREIGN KEY (id_accion) REFERENCES Accion(id_accion)
 );
 
