@@ -5,7 +5,10 @@ class ConexionDatabaseOperacion(InterfaceConexionDatabaseOperacion):
     def __init__(self,connection:DatabaseConnection):
         self.connection=connection.connection_database()
     def save_changes(self):
-        self.connection.commit()
+        try:
+            self.connection.commit()
+        except Exception as e:
+            print(f"Error al confirmar los cambios: {e}")
     def get_operacion(self, id):
         try:
             with self.connection.cursor() as cursor:
@@ -51,8 +54,8 @@ class ConexionDatabaseOperacion(InterfaceConexionDatabaseOperacion):
                 cursor.execute(query, values)
                 self.save_changes()
                 print(f"Operacion Completada")
-
         except self.connection.Error as e:
             print(f"Error en la base de datos: {e}")
         except Exception as e:
             print(f"Ocurrió un error inesperado: {e}")
+

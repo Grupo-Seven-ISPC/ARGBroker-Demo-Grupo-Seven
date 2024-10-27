@@ -1,10 +1,12 @@
 from ..database.conexion_movimiento import ConexionDatabaseMovimiento
+from ..database.conexion_cotizaciones import ConexionDatabaseCotizaciones
 from .stock_service import StockService
 
 class UserService:
-    def __init__(self, conexion_movimiento_db:ConexionDatabaseMovimiento, stock_service:StockService):
+    def __init__(self, conexion_movimiento_db:ConexionDatabaseMovimiento, stock_service:StockService,conexion_cotizaciones_db: ConexionDatabaseCotizaciones):
         self.conexion_movimiento_db = conexion_movimiento_db
         self.stock_service = stock_service
+        self.conexion_cotizaciones_db=conexion_cotizaciones_db
 
     def ver_saldo(self, usuario):
         saldo = self.conexion_movimiento_db.calcular_saldo(usuario.get_id_usuario())
@@ -20,8 +22,9 @@ class UserService:
 
     def mostrar_precio_accion(self):
         simbolo = input("Seleccione el símbolo de la acción a consultar: ")
-        precio = self.conexion_movimiento_db.consultar_simbolo(simbolo)
-        print(f"El precio actual de {simbolo} es: ${precio}")
+        precio_compra = self.conexion_cotizaciones_db.consultar_simbolo_compra(simbolo)
+        precio_venta = self.conexion_cotizaciones_db.consultar_simbolo_venta(simbolo)
+        print(f"El precio actual de {simbolo} para compra es: ${precio_compra} y para la venta es : ${precio_venta}")
 
     def gestionar_acciones(self, usuario):
         print("1. Comprar Acciones")

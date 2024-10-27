@@ -6,6 +6,7 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
         self.connection=connection.connection_database()
     def calcular_saldo(self,id):
         try:
+            self.connection.reconnect()
             with self.connection.cursor() as cursor:
                 query = """
                     SELECT 
@@ -81,21 +82,3 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
     def save_changes(self):
         self.connection.commit()
         
-        #Esta funcion tiene que ir en Accion , o en HistorialAcciones
-    def consultar_simbolo(self,simbolo):
-        try:
-            with self.connection.cursor() as cursor:
-                query = """
-                    SELECT h.precio FROM HistorialAcciones h JOIN Accion a ON h.id_accion = a.id_accion 
-                    WHERE a.simbolo = %s AND h.dia = CURRENT_DATE()
-                """
-                values=(simbolo,)
-                cursor.execute(query, values)
-                resultado=cursor.fetchone()
-                precio = resultado[0]
-                print(f"\nEl precio de compra es: {precio}")
-                return precio
-        except self.connection.Error as e:
-            print(f"Error en la base de datos: {e}")
-        except Exception as e:
-            print(f"Ocurrió un error inesperado: {e}")

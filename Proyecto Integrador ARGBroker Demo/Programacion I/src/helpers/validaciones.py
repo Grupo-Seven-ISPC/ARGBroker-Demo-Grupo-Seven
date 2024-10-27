@@ -45,16 +45,25 @@ class Validaciones:
             return True
         else:
             return False
-    def validacion_accion_simbolo_existe(self,listado_acciones,simbolo):
+    def validacion_accion_simbolo_existe_compra(self,listado_acciones,simbolo):
         existe_accion=False
         for accion in listado_acciones:
             if simbolo == accion[2]:
                 existe_accion= True
         return existe_accion
-    def validacion_saldo_compra_acciones(self,saldo_total,saldo_a_abonar):
+    def validacion_saldo_compra_venta_acciones(self,saldo_total,saldo_a_abonar):
         if saldo_total - saldo_a_abonar >=0:
             return True
         else :
             return False
-    def validacion_cantidad_acciones_disponible(self):
-        pass
+    def validacion_cantidad_acciones_disponible(self,cantidad_acciones_a_comprar,cantidad_disponible):
+        if (cantidad_disponible - cantidad_acciones_a_comprar)>=0:
+            return True
+        else:
+            return False 
+    def validacion_accion_simbolo_existe_venta(self,listado_acciones,simbolo):
+        existe_accion=False
+        for accion in listado_acciones:
+            if simbolo == accion[0]:
+                existe_accion= True
+        return existe_accion
