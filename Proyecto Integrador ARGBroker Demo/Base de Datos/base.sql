@@ -1,10 +1,10 @@
--- Crear la base de datos argbroker desde cero
+-- Crear la base de datos argbroker
 CREATE DATABASE argbroker;
 
 -- Usar la base de datos argbroker
 USE argbroker;
 
--- Tabla Usuarios (antes Clientes)
+-- Tabla Usuarios
 CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     cuil VARCHAR(20),
@@ -31,7 +31,7 @@ CREATE TABLE Estado (
     estado VARCHAR(50) NOT NULL
 );
 
--- Tabla Operacion (sin campo comision)
+-- Tabla Operacion
 CREATE TABLE Operacion (
     id_operacion INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
