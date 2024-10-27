@@ -91,28 +91,28 @@ precio_venta INT NOT NULL,
 FOREIGN KEY (id_accion) REFERENCES Accion(id_accion)
 );
 
-INSERT INTO Accion (nombre, simbolo) VALUES ("Aluar", "ALUA");
-INSERT INTO Accion (nombre, simbolo) VALUES ("BBVA", "BBAR");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Banco Macro","BMA");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Bolsas y Mercados Argentinos S.A","BYMA");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Central Puerto S.A", "CEPU");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Sociedad Comercial del Plata", "COME");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Cresud", "CRES");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Cablevision Holding S.A", "CVH");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Edenor", "EDN");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Grupo Financiero Galicia S.A", "GGAL");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Holcim Argentina", "HARG");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Loma Negra Compañia Industrial Argentina S.A", "LOMA");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Mirgor", "MIRG");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Pampa Energía", "PAMP");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Grupo Supervielle S.A", "SUPV");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Telecom Argentina", "TECO2");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Transportadora Gas del Norte", "TGN04");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Transportadora Gas del Sur", "TGSU2");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Transener", "TRAN");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Ternium Argentina S.A", "TXAR");
-INSERT INTO Accion (nombre, simbolo) VALUES ("Banco de Valores S.A", "VALO");
-INSERT INTO Accion (nombre, simbolo) VALUES ("YPF", "YPFD");
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Aluar", "ALUA", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("BBVA", "BBAR", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Banco Macro","BMA", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Bolsas y Mercados Argentinos S.A","BYMA", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Central Puerto S.A", "CEPU", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Sociedad Comercial del Plata", "COME", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Cresud", "CRES", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Cablevision Holding S.A", "CVH", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Edenor", "EDN", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Grupo Financiero Galicia S.A", "GGAL", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Holcim Argentina", "HARG", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Loma Negra Compañia Industrial Argentina S.A", "LOMA", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Mirgor", "MIRG", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Pampa Energía", "PAMP", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Grupo Supervielle S.A", "SUPV", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Telecom Argentina", "TECO2", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Transportadora Gas del Norte", "TGN04", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Transportadora Gas del Sur", "TGSU2", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Transener", "TRAN", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Ternium Argentina S.A", "TXAR", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Banco de Valores S.A", "VALO", 50000);
+INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("YPF", "YPFD", 50000);
 
 
 INSERT INTO Estado (estado) VALUES ("Operado")
