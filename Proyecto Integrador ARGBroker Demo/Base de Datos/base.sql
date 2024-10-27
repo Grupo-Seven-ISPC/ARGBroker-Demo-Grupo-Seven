@@ -118,3 +118,7 @@ INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("YPF", "YPFD", 50000);
 INSERT INTO Estado (estado) VALUES ("Operado")
 INSERT INTO Estado (estado) VALUES ("Cancelado")
 INSERT INTO Estado (estado) VALUES ("Pendiente")
+
+
+SELECT h.precio_compra FROM Cotizaciones h JOIN Accion a ON h.id_accion = a.id_accion 
+                WHERE a.simbolo = "PAMP" AND h.dia = CURRENT_DATE();
