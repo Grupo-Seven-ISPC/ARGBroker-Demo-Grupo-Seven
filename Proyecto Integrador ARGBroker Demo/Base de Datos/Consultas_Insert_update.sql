@@ -21,6 +21,18 @@ SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN 
             WHERE m.id_usuario = 4
             GROUP BY m.id_usuario;
 
+-- INSERTAR USUARIOS EJEMPLO
+INSERT INTO Usuarios (cuil, nombre, apellido, email, perfil, contraseña) 
+VALUES ('20-12345678-9', 'Juan', 'Pérez', 'juan.perez@example.com', 'medio', 'contraseña123');
+INSERT INTO Usuarios (cuit, nombre, apellido, email, perfil, contraseña) 
+VALUES 
+('20-98765432-1', 'Ana', 'Gómez', 'ana.gomez@example.com', 'agresivo', 'contraseña456'),
+('20-11223344-5', 'Carlos', 'Lopez', 'carlos.lopez@example.com', 'conservador', 'contraseña789'),
+('20-22334455-2', 'María', 'Fernández', 'maria.fernandez@example.com', 'medio', 'contraseña321'),
+('20-33445566-3', 'Pedro', 'Martínez', 'pedro.martinez@example.com', 'agresivo', 'contraseña654');
+
+
+
 UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
 UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
 UPDATE Usuarios SET email = "lalalamail@gmail.com" WHERE id_usuario = 3
