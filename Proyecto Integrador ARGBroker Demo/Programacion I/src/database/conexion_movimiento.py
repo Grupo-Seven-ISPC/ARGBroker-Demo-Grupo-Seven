@@ -79,6 +79,38 @@ class ConexionDatabaseMovimiento(InterfaceConexionDatabaseMovimiento):
                 print(f"Ocurrió un error inesperado: {e}")
         else:
             return False
+    
+    def obtener_ingresos(self,id):
+        try:
+            with self.connection.cursor() as cursor:
+                query = """
+                       SELECT COALESCE(SUM(monto), 0) AS total_ingresos 
+                    FROM Movimiento 
+                    WHERE id_usuario = %s AND monto > 0
+                    """
+                cursor.execute(query, (id,))
+                total_ingresos = cursor.fetchone()[0]
+                return total_ingresos
+        except self.connection.Error as e:
+                print(f"Error en la base de datos: {e}")
+        except Exception as e:
+                print(f"Ocurrió un error inesperado: {e}")
+    def obtener_egresos(self,id):
+        try:
+            with self.connection.cursor() as cursor:
+                query = """
+                        SELECT COALESCE(SUM(monto), 0) AS total_egresos 
+                    FROM Movimiento 
+                    WHERE id_usuario = %s AND monto < 0
+                    """
+                cursor.execute(query, (id,))
+                total_egresos = cursor.fetchone()[0]
+                return total_egresos
+        except self.connection.Error as e:
+                print(f"Error en la base de datos: {e}")
+        except Exception as e:
+                print(f"Ocurrió un error inesperado: {e}")
+                          
     def save_changes(self):
         self.connection.commit()
         

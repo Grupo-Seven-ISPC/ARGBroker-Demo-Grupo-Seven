@@ -6,9 +6,10 @@ from ..service.stock_service import StockService
 from ..service.user_service import UserService
 from ..database.conexion_operacion import ConexionDatabaseOperacion
 from ..database.conexion_cotizaciones import ConexionDatabaseCotizaciones
+from ..database.conexion_movimiento import ConexionDatabaseMovimiento
 
 class ProgramaService:
-    def __init__(self,auth_service:AuthService,password_service:PasswordService,stock_service:StockService,user_service:UserService,helper_programa:HelperPrograma, conexion_operacion_db:ConexionDatabaseOperacion,conexion_cotizaciones_db:ConexionDatabaseCotizaciones):
+    def __init__(self,auth_service:AuthService,password_service:PasswordService,stock_service:StockService,user_service:UserService,helper_programa:HelperPrograma, conexion_operacion_db:ConexionDatabaseOperacion,conexion_cotizaciones_db:ConexionDatabaseCotizaciones,conexion_movimiento_db:ConexionDatabaseMovimiento):
         self.__inicio_sesion=False
         self.__primera_vez_programa=True
         self.helper_programa=helper_programa
@@ -18,6 +19,7 @@ class ProgramaService:
         self.user_service=user_service
         self.conexion_operacion_db=conexion_operacion_db
         self.conexion_cotizaciones_db=conexion_cotizaciones_db
+        self.conexion_movimiento_db=conexion_movimiento_db
 
     def get_inicio_sesion(self):
         return self.__inicio_sesion
@@ -61,10 +63,17 @@ class ProgramaService:
             self.user_service.ver_saldo(usuario)
             self.dashboard(usuario)
         elif opcion_usuario == "2":
-            #Agregar al helper programa una funcion que haga esto y ademas muestre un print
-            self.conexion_operacion_db.obtener_historial_transacciones(usuario.get_id_usuario())
+            total_ingresos=self.conexion_movimiento_db.obtener_ingresos(usuario.get_id_usuario())
+            total_egresos=self.conexion_movimiento_db.obtener_egresos(usuario.get_id_usuario())
+            total_invertido_acciones=self.conexion_operacion_db.obtener_invertido_en_acciones_usuario(usuario.get_id_usuario())
+            print(total_ingresos, total_egresos, total_invertido_acciones)
+            total_invertido = total_ingresos - abs(total_egresos) + total_invertido_acciones
+            print(f"Total invertido del usuario: $ {total_invertido}")
             self.dashboard(usuario)
         elif opcion_usuario == "3":
+            self.conexion_operacion_db.obtener_historial_transacciones(usuario.get_id_usuario())
+            self.dashboard(usuario)
+        elif opcion_usuario == "4":
             print("1. Rendimiento por Accion ")
             print("2. Rendimiento Total ")
             opcion= input("Seleccione una opcion: ")
@@ -81,24 +90,31 @@ class ProgramaService:
                         print(f"Precio actual no disponible para la acción {accion[1]}")
                 self.dashboard(usuario)
             elif opcion == "2":
-                pass
+                print("Cargando .....")
+                acciones_totales_usuario=self.conexion_operacion_db.obtener_operaciones_rendimiento(usuario.get_id_usuario())
+                rendimiento_total = 0.0
+                for accion in acciones_totales_usuario:
+                    precio_actual=self.conexion_cotizaciones_db.consultar_simbolo_venta(accion[2])
+                    rendimiento_total += float(self.calcular_rendimiento(precio_actual,accion[3])) 
+                print(f"Rendimiento total de las inversiones del usuario:  {rendimiento_total:.2f} %")
+                self.dashboard(usuario)
             else:
                 print("Opcion Invalida")
                 self.dashboard(usuario)
-        elif opcion_usuario == "4":
+        elif opcion_usuario == "5":
             self.user_service.registrar_ingreso(usuario)
             self.dashboard(usuario)
-        elif opcion_usuario == "5":
+        elif opcion_usuario == "6":
             self.user_service.registrar_egreso(usuario)
             self.dashboard(usuario)
-        elif opcion_usuario == "6":
+        elif opcion_usuario == "7":
             self.user_service.mostrar_precio_accion()
             self.dashboard(usuario)
-        elif opcion_usuario == "7":
+        elif opcion_usuario == "8":
             if not self.user_service.gestionar_acciones(usuario):
                 self.dashboard(usuario)
 
-        elif opcion_usuario == "8":
+        elif opcion_usuario == "9":
             print("Cerrando sesión...")
             self.start_program()
         else:

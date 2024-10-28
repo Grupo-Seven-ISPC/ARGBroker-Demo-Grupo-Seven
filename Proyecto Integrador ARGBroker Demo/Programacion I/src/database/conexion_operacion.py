@@ -120,5 +120,22 @@ class ConexionDatabaseOperacion(InterfaceConexionDatabaseOperacion):
 
         except self.connection.Error as e:
             print(f"Error al obtener las operaciones del usuario: {e}")
+    
+    def obtener_invertido_en_acciones_usuario(self,id_usuario):
+        try:
+            with self.connection.cursor() as cursor:
+                query = """
+                    SELECT COALESCE(SUM(o.cantidad * o.precio_unit), 0) AS total_acciones
+                    FROM Operacion o
+                    WHERE o.id_usuario = %s AND o.tipo = 'compra'
+                """
+                cursor.execute(query, (id_usuario,))
+                total_acciones = cursor.fetchone()[0] or 0
+                return total_acciones
+                
+        except self.connection.Error as e:
+            print(f"Error en la base de datos: {e}")
+        except Exception as e:
+            print(f"Ocurrió un error inesperado: {e}")
 
 
