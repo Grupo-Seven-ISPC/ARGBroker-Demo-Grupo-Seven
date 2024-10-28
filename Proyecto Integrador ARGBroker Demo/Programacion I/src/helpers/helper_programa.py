@@ -12,10 +12,13 @@ class HelperPrograma:
      
     def opciones_dashboard(self):
         print("\n1. Ver saldo actual")
-        print("2. Registrar ingreso")
-        print("3. Registrar egreso")
-        print("4. Mostrar precio de compras y ventas")
-        print("5. Comprar/Vender Acciones")
-        print("6. Cerrar sesión")
+        print("2. Historial Transacciones")
+        print("3. Rendimientos")
+        print("4. Registrar ingreso")
+        print("5. Registrar egreso")
+        print("6. Mostrar precio de compras y ventas")
+        print("7. Comprar/Vender Acciones")
+        print("8. Cerrar sesión")
         opcion_usuario = input("Seleccione una opción: ")
         return opcion_usuario
+    

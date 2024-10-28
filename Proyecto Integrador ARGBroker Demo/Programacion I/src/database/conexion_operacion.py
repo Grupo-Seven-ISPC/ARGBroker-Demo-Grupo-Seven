@@ -58,4 +58,67 @@ class ConexionDatabaseOperacion(InterfaceConexionDatabaseOperacion):
             print(f"Error en la base de datos: {e}")
         except Exception as e:
             print(f"Ocurrió un error inesperado: {e}")
+    def obtener_historial_transacciones(self, id_usuario):
+        try:
+            with self.connection.cursor() as cursor:
+                consulta = """
+                SELECT 
+                    O.id_operacion,
+                    O.fecha,
+                    O.cantidad,
+                    O.tipo,
+                    O.precio_unit,
+                    A.nombre AS nombre_accion,
+                    A.simbolo AS simbolo_accion,
+                    E.estado AS estado_operacion
+                FROM 
+                    Operacion O
+                JOIN 
+                    Accion A ON O.id_accion = A.id_accion
+                JOIN 
+                    Estado E ON O.id_estado = E.id_estado
+                WHERE 
+                    O.id_usuario = %s;
+                """
+                cursor.execute(consulta, (id_usuario,))
+                resultados = cursor.fetchall()
+
+                if resultados:
+                    for transaccion in resultados:
+                        print(f"ID Operación: {transaccion[0]}, Fecha: {transaccion[1]}, "
+                              f"Cantidad: {transaccion[2]}, Tipo: {transaccion[3]}, "
+                              f"Precio Unitario: {transaccion[4]}, Acción: {transaccion[5]}, "
+                              f"Símbolo: {transaccion[6]}, Estado: {transaccion[7]}")
+                else:
+                    print(f"No hay transacciones para el inversor con ID {id_usuario}")
+
+        except self.connection.Error as e:
+            print(f"Error al ejecutar la consulta: {e.args[0]}, {e.args[1]}")
+
+    def obtener_operaciones_rendimiento(self,id_usuario):
+        try:
+            with self.connection.cursor() as cursor:
+                consulta = """
+                SELECT 
+                    O.id_accion, A.nombre, A.simbolo, O.precio_unit AS precio_compra, O.cantidad
+                FROM 
+                    Operacion O
+                JOIN 
+                    Accion A ON O.id_accion = A.id_accion
+                WHERE 
+                    O.id_usuario = %s
+                """
+                cursor.execute(consulta, (id_usuario,))
+                resultados = cursor.fetchall()
+
+                acciones_totales_usuario=[]
+                for resultado in resultados:
+                    id_accion, nombre, simbolo, precio_compra, cantidad = resultado
+                    accion = (id_accion, nombre, simbolo, precio_compra, cantidad)
+                    acciones_totales_usuario.append(accion)
+                return acciones_totales_usuario
+
+        except self.connection.Error as e:
+            print(f"Error al obtener las operaciones del usuario: {e}")
+
 
