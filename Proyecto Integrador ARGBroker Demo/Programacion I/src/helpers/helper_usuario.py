@@ -45,7 +45,7 @@ class HelperUsuario:
     def ingresar_contraseña(self):
         contraseña = input("Ingrese su contraseña (mínimo 8 caracteres, al menos una mayúscula y una minúscula): ")
         validacion_contraseña=self.validaciones.validacion_contraseña(contraseña)
-        if not validacion_contraseña:
+        if validacion_contraseña != True:
             print(validacion_contraseña)
             self.ingresar_contraseña()
         else:
