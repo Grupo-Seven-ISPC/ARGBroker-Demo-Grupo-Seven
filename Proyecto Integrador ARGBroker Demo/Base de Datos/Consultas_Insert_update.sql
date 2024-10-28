@@ -1,28 +1,5 @@
-
-
--- IMPLEMENTAR VER SALDO ACTUAL
-INSERT INTO Movimiento (id_usuario, fecha, monto) VALUES (1,'2024-10-13', 1000000);
-INSERT INTO Movimiento (id_usuario, fecha, monto) VALUES (1,'2024-10-13', -100445);
-
-SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
-FROM Movimiento m 
-LEFT JOIN Operacion o 
-ON m.id_usuario = o.id_usuario 
-WHERE m.id_usuario = 1 
-GROUP BY m.id_usuario
-
-
-SELECT NOW();
-
-SELECT COALESCE(SUM(m.monto),0) + COALESCE(SUM(CASE WHEN o.tipo = 'compra' THEN -o.cantidad * o.precio_unit WHEN o.tipo = 'venta' THEN o.cantidad * o.precio_unit END) ,0) AS BalanceTotal
-            FROM Movimiento m 
-            LEFT JOIN Operacion o 
-            ON m.id_usuario = o.id_usuario 
-            WHERE m.id_usuario = 4
-            GROUP BY m.id_usuario;
-
 -- INSERTAR USUARIOS EJEMPLO
-INSERT INTO Usuarios (cuil, nombre, apellido, email, perfil, contraseña) 
+INSERT INTO Usuarios (cuit, nombre, apellido, email, perfil, contraseña) 
 VALUES ('20-12345678-9', 'Juan', 'Pérez', 'juan.perez@example.com', 'medio', 'contraseña123');
 INSERT INTO Usuarios (cuit, nombre, apellido, email, perfil, contraseña) 
 VALUES 
@@ -31,15 +8,6 @@ VALUES
 ('20-22334455-2', 'María', 'Fernández', 'maria.fernandez@example.com', 'medio', 'contraseña321'),
 ('20-33445566-3', 'Pedro', 'Martínez', 'pedro.martinez@example.com', 'agresivo', 'contraseña654');
 
-
-
-UPDATE Usuarios SET contraseña = "Argentina123" WHERE id_usuario = 1 ;
-UPDATE Usuarios SET contraseña = "Banquito123" WHERE ID_USUARIO = 2
-UPDATE Usuarios SET email = "lalalamail@gmail.com" WHERE id_usuario = 3
-
-
-
---CARGA DE ACCIONES DISPONIBLES EN EL SISTEMA, DATOS INICIALES
 INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Aluar", "ALUA", 50000);
 INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("BBVA", "BBAR", 50000);
 INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Banco Macro","BMA", 50000);
@@ -63,19 +31,10 @@ INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Ternium Argentina S.A", 
 INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("Banco de Valores S.A", "VALO", 50000);
 INSERT INTO Accion (nombre, simbolo, cantidad) VALUES ("YPF", "YPFD", 50000);
 
+INSERT INTO Estado (estado) VALUES ("Operado");
+INSERT INTO Estado (estado) VALUES ("Cancelado");
+INSERT INTO Estado (estado) VALUES ("Pendiente");
 
---CARGA DE ESTADOS POSIBLES PARA LAS OPERACIONES
-INSERT INTO Estado (estado) VALUES ("Operado")
-INSERT INTO Estado (estado) VALUES ("Cancelado")
-INSERT INTO Estado (estado) VALUES ("Pendiente")
-
-
-SELECT h.precio_compra FROM Cotizaciones h JOIN Accion a ON h.id_accion = a.id_accion 
-                WHERE a.simbolo = "PAMP" AND h.dia = CURRENT_DATE();
-
-
---OPERACIONES DE COMPRA Y VENTA CARGADAS COMO DATOS INICIALES
--- Operaciones de compra
 INSERT INTO Operacion (fecha, id_estado, id_usuario, id_accion, cantidad, tipo, precio_unit) VALUES ('2024-01-15', 1, 1, 3, 85, 'compra', 54.73);
 UPDATE Accion SET cantidad = cantidad - 85 WHERE id_accion = 3;
 
@@ -245,6 +204,3 @@ UPDATE Accion SET cantidad = cantidad + 33 WHERE id_accion = 1;
 
 INSERT INTO Operacion (fecha, id_estado, id_usuario, id_accion, cantidad, tipo, precio_unit) VALUES ('2024-01-26', 1, 1, 4, 66, 'venta', 30.59);
 UPDATE Accion SET cantidad = cantidad + 66 WHERE id_accion = 4;
-
-
-

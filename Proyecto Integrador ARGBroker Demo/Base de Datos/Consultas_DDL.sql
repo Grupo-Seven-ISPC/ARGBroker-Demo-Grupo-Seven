@@ -13,7 +13,7 @@ CREATE TABLE Usuarios (
     email VARCHAR(100),
     CONSTRAINT UC_cuit UNIQUE (cuit),
     CONSTRAINT UC_email UNIQUE (email),
-    perfil ENUM('conservador', 'medio', 'agresivo') NOT NULL,  -- Modificado a perfil
+    perfil ENUM('conservador', 'medio', 'agresivo') NOT NULL  -- Modificado a perfil
 );
 
 -- Tabla Accion
@@ -57,4 +57,3 @@ CREATE TABLE Movimiento (
 
 -- AGREGAR CONTRASEÑA A LA TABLA USUARIOS
 ALTER TABLE Usuarios ADD COLUMN contraseña VARCHAR(20);
-
