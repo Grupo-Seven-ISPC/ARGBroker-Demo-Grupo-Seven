@@ -19,6 +19,7 @@ class StockService:
             self.compra_acciones(usuario)
         
         precio_accion=self.helper_stock.obtener_precio_accion(accion_a_comprar)
+        print(f"\nEl precio de compra es: $ {precio_accion}")
 
         if not self.helper_stock.confirmar_operacion():
             return False
@@ -36,6 +37,7 @@ class StockService:
             self.venta_acciones(usuario)
 
         precio_venta=self.helper_stock.obtener_precio_accion_venta(accion_a_vender)
+        print(f"\nEl precio de venta es: $ {precio_venta}")
 
         if not self.helper_stock.confirmar_operacion():
             return False

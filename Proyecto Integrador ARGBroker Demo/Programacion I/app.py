@@ -40,7 +40,7 @@ if __name__ == "__main__":
     password_service = PasswordService(conexion_usuario_db, helper_password, validaciones, auth_service)
     stock_service = StockService(helper_stock)
     user_service = UserService(conexion_movimiento_db, stock_service, conexion_cotizaciones_db)
-    programa_service = ProgramaService(auth_service, password_service, stock_service, user_service, helper_programa,conexion_operacion_db,conexion_cotizaciones_db)
+    programa_service = ProgramaService(auth_service, password_service, stock_service, user_service, helper_programa,conexion_operacion_db,conexion_cotizaciones_db,conexion_movimiento_db)
     
     app = programa_service
     app.start_program()

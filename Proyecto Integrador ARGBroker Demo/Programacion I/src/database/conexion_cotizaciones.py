@@ -17,7 +17,6 @@ class ConexionDatabaseCotizaciones(InterfaceConexionDatabaseCotizaciones):
                 if resultado is None:
                     raise ValueError(f"No se encontró ninguna cotización para el símbolo {simbolo}.")
                 precio = resultado[0]
-                print(f"\nEl precio de compra es: $ {precio}")
                 return precio
         except ValueError as ve:
             print(ve)
@@ -42,7 +41,6 @@ class ConexionDatabaseCotizaciones(InterfaceConexionDatabaseCotizaciones):
                 if resultado is None:
                     raise ValueError(f"No se encontró ninguna cotización para el símbolo {simbolo}.")
                 precio = resultado[0]
-                print(f"\nEl precio de venta es: $ {precio}")
                 return precio
         except ValueError as ve:
             print(ve)
