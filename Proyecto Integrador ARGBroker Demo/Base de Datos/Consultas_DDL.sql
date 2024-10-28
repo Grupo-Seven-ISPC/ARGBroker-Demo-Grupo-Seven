@@ -55,5 +55,13 @@ CREATE TABLE Movimiento (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
+-- Tabla Cotizaciones
+CREATE TABLE Cotizaciones (
+   id_accion INT,
+  dia DATE,
+  precio_compra INT,
+  precio_venta INT
+  );
+
 -- AGREGAR CONTRASEÑA A LA TABLA USUARIOS
 ALTER TABLE Usuarios ADD COLUMN contraseña VARCHAR(20);
