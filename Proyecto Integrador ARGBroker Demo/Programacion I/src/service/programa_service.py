@@ -63,11 +63,9 @@ class ProgramaService:
             self.user_service.ver_saldo(usuario)
             self.dashboard(usuario)
         elif opcion_usuario == "2":
-            total_ingresos=self.conexion_movimiento_db.obtener_ingresos(usuario.get_id_usuario())
             total_egresos=self.conexion_movimiento_db.obtener_egresos(usuario.get_id_usuario())
             total_invertido_acciones=self.conexion_operacion_db.obtener_invertido_en_acciones_usuario(usuario.get_id_usuario())
-            print(total_ingresos, total_egresos, total_invertido_acciones)
-            total_invertido = total_ingresos - abs(total_egresos) + total_invertido_acciones
+            total_invertido = total_invertido_acciones - abs(total_egresos) 
             print(f"Total invertido del usuario: $ {total_invertido}")
             self.dashboard(usuario)
         elif opcion_usuario == "3":
