@@ -1,7 +1,7 @@
 -- INSERTAR USUARIOS EJEMPLO
-INSERT INTO Usuarios (cuit, nombre, apellido, email, perfil, contraseña) 
+INSERT INTO Usuarios (cuil, nombre, apellido, email, perfil, contraseña) 
 VALUES ('20-12345678-9', 'Juan', 'Pérez', 'juan.perez@example.com', 'medio', 'contraseña123');
-INSERT INTO Usuarios (cuit, nombre, apellido, email, perfil, contraseña) 
+INSERT INTO Usuarios (cuil, nombre, apellido, email, perfil, contraseña) 
 VALUES 
 ('20-98765432-1', 'Ana', 'Gómez', 'ana.gomez@example.com', 'agresivo', 'contraseña456'),
 ('20-11223344-5', 'Carlos', 'Lopez', 'carlos.lopez@example.com', 'conservador', 'contraseña789'),

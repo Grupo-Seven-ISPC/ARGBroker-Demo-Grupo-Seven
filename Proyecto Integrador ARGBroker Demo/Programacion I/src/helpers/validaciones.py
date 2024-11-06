@@ -9,7 +9,7 @@ class Validaciones:
         if len(cuil) == 11 and cuil.isdigit():
             cuil_existe=self.conexion_usuario_db.get_one({"cuil":cuil})
             if cuil_existe:
-                return "CUIT ya registrado. Intente con otro."
+                return "CUIL ya registrado. Intente con otro."
             return  True
         else:
             return False

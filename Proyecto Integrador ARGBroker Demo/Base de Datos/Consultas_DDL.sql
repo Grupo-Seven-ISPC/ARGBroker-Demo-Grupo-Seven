@@ -7,11 +7,11 @@ USE argbroker;
 -- Tabla Usuarios
 CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    cuit VARCHAR(20),
+    cuil VARCHAR(20),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     email VARCHAR(100),
-    CONSTRAINT UC_cuit UNIQUE (cuit),
+    CONSTRAINT UC_cuil UNIQUE (cuil),
     CONSTRAINT UC_email UNIQUE (email),
     perfil ENUM('conservador', 'medio', 'agresivo') NOT NULL  -- Modificado a perfil
 );
